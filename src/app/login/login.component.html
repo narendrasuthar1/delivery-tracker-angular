@@ -1,0 +1,13 @@
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div>
+        <h1 class="pt-4 pb-3 d-flex justify-content-center">Login</h1>
+        <form [formGroup]="loginForm">
+            <div class="form-group py-2">
+                <input type="tel" placeholder="Enter Mobile No." formControlName="mobileNumber" 
+                    class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary w-100" [disabled]="!this.loginForm.valid"  (click)="login();">Login</button>
+        </form>
+    </div>
+</div>

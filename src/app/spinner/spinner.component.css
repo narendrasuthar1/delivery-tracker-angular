@@ -1,0 +1,85 @@
+@keyframes bouncing {
+    0% {
+      top: 40%;
+    }
+    100% {
+      top: 30%;
+    }
+  }
+  
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+  
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .page-overlay-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 1009;
+    background: rgba(112, 191, 93, 0.5);
+  
+    .bee-spinner {
+      width: 5%;
+      height: 5%;
+      position: fixed;
+      top: 40%;
+      left: calc(50% - 5%);
+      z-index: 100;
+      background-image: url(../../assets/motorcycle_15300698.png);
+      background-repeat: no-repeat;
+      background-size: 97%;
+      animation: bouncing 0.4s cubic-bezier(0.1, 0.25, 0.1, 1) 0s infinite
+        alternate both;
+    }
+  }
+
+  .page-overlay-wrapper-apk {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 1009;
+    background: rgba(112, 191, 93, 0.5);
+  
+    .bee-spinner-apk {
+      width: 5%;
+      height: 5%;
+      position: fixed;
+      top: 40%;
+      left: calc(50% - 5%);
+      z-index: 100;
+      background-image: url(../../assets/motorcycle_15300698.png);
+      background-repeat: no-repeat;
+      background-size: 97%;
+      animation: bouncing 0.4s cubic-bezier(0.1, 0.25, 0.1, 1) 0s infinite
+        alternate both;
+    }
+  }
+
+  
+@media (min-width: 720px){
+  .page-overlay-wrapper{
+      width: 50% !important;
+  }
+
+  .bee-spinner{
+      height: 20% !important;
+      left: calc(50% - 30%) !important;
+  }
+}
+
+@media (min-width: 1150px){
+  .page-overlay-wrapper{
+      width: 33% !important;
+  }
+  .bee-spinner{
+      left: calc(33% - 19%) !important;
+  }
+}

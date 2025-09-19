@@ -1,0 +1,120 @@
+<div class="p-1">
+    <h5>{{orderType}}</h5>
+    <div class="card mb-2" *ngFor="let order of orderList">
+        <div class="card-body">
+            <div class="d-flex">
+                <div class="col-8 sub-heading-font ">
+                    <span class="material-symbols-outlined sub-heading-font">
+                        local_mall
+                    </span>
+                    <span class="data-font text-bottom">{{order.shopName}}</span>
+                </div>
+                <div class="col-4 d-flex justify-content-end sub-heading-font">
+                    <span class="material-symbols-outlined sub-heading-font pe-1">
+                        receipt
+                    </span><span class="data-font text-bottom">{{order.invoiceNumber}}</span>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-6 sub-heading-font">
+                    <span class="material-symbols-outlined sub-heading-font">
+                        account_box
+                    </span>
+                    <span class="data-font text-bottom">{{order.salesmanName}}</span>
+                </div>
+                <div class="col-6 sub-heading-font d-flex justify-content-end">
+                    <span class="material-symbols-outlined heading-font pe-1">
+                        call
+                    </span>
+                    <span class="data-font text-bottom">
+                        <a href="{{'tel: +91-'+(order.salesMobileNumber)}}" class="data-font"
+                            style="color: #0d6efd;text-decoration: none;">+91 {{order.salesMobileNumber}}</a>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="d-flex">
+                <div class="col-9">
+                    <div class="sub-heading-font ">
+                        <span class="material-symbols-outlined sub-heading-font pe-1">
+                            date_range
+                        </span><span class="data-font text-bottom">{{order.orderTimeStamp}}</span>
+                    </div>
+                    <div class="sub-heading-font ">
+                        <span class="material-symbols-outlined sub-heading-font">
+                            currency_rupee
+                        </span>
+                        <span class="data-font text-bottom">{{order.amount}}</span>
+                    </div>
+                </div>
+
+                <div class="col-3 d-flex justify-content-end" *ngIf="'Pending Invoice' === orderType">
+                    <span (click)="showDetails(order)"
+                        class="material-symbols-outlined material-symbols-outlined bg-primary text-white border rounded px-3">
+                        chevron_right
+                    </span>
+                </div>
+            </div>
+
+            <div *ngIf="'Pending Invoice' !== orderType">
+                <hr>
+                <div class="d-flex">
+                    <div class="col-6 sub-heading-font">
+                        Paid By Cash:
+                        <span class="data-font text-bottom">{{order.cash}}</span>
+                    </div>
+                    <div class="col-6 sub-heading-font d-flex justify-content-end">
+                        <span class="material-symbols-outlined heading-font pe-1">
+                            currency_rupee
+                        </span>
+                        <span class="data-font text-bottom">
+                            {{order.receivedAmount}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="col-6 sub-heading-font">
+                        Deliver By :
+                        <span class="data-font text-bottom">{{order.user.name}}</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="card-body pt-0" *ngIf="order.showDetails ">
+            <div class="d-flex pb-2">
+                <div class="pe-2 form-check" (click)="paymentByCash(order,true)">
+                    <input type="radio" id="cash" name="cash" [checked]="order.isCash" class="form-check-input me-1">
+                    <label for="cash" class="data-font">Cash</label>
+                </div>
+                <div class="pe-2" *ngIf="order.isCash">
+                    <input type="tel" class="data-font form-control py-1" name="amount" placeholder="Enter Amount"
+                        [(ngModel)]="order.receivedAmount">
+                </div>
+                <div (click)="paymentByCash(order,false)" class="form-check">
+                    <input type="radio" id="cheque" name="cheque" [checked]="!order.isCash"
+                        class="form-check-input me-1">
+                    <label for="cheque" class="data-font">Cheque</label>
+                </div>
+
+
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-success w-100 me-1 data-font" (click)="deliverOrder(order)">Deliver</button>
+                <button class="btn btn-danger w-100 ms-1 data-font" (click)="showDetails(order)">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div *ngIf="orderList.length == 0">
+        <h3>No Orders Present</h3>
+    </div>
+</div>

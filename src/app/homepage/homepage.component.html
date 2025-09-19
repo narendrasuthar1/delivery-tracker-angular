@@ -1,0 +1,22 @@
+<app-navbar [selectedPage]="pageHeading" (navigatePage)="changePage($event)"></app-navbar>
+
+<div [ngSwitch]="pageName">
+  <div *ngSwitchCase="'viewAllOrders'">
+    <app-view-order [orderType]="pageHeading"></app-view-order>
+  </div>
+  <div *ngSwitchCase="'viewPendingOrder'">
+    <app-view-order [orderType]="pageHeading"></app-view-order>
+  </div>
+  <div *ngSwitchCase="'viewCompletedOrder'">
+    <app-view-order [orderType]="pageHeading"></app-view-order>
+  </div>
+  <div *ngSwitchCase="'editinvoice'">
+    <app-edit-order (orderDetails)="editOrder($event)" [orderType]="pageHeading"></app-edit-order>
+  </div>
+   <div *ngSwitchCase="'editExistingOrder'">
+    <app-add-order [pageName]="pageHeading" [order]="orderToBeEditted"></app-add-order>
+  </div> 
+  <div *ngSwitchCase="'addOrder'">
+    <app-add-order [pageName]="pageHeading" [order]="orderToBeEditted"></app-add-order>
+  </div>
+</div>
