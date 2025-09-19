@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class ApiServicService {
 
-  // baseURL:string = "https://deliverytracker-az2r.onrender.com";
+  baseURL:string = "https://deliverytracker-az2r.onrender.com";
 
-    baseURL:string = "http://localhost:8080";
+    // baseURL:string = "http://localhost:8080";
 
 
   constructor(private http: HttpClient) { 
