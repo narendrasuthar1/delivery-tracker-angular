@@ -9,38 +9,38 @@ import { SpinnerService } from '../service/spinner.service';
   templateUrl: './add-order.component.html',
   styleUrls: ['./add-order.component.css']
 })
-export class AddOrderComponent implements OnInit{
+export class AddOrderComponent implements OnInit {
 
   @Input()
-  pageName:any;
+  pageName: any;
 
   @Input()
-  order:any;
+  order: any;
 
-  isEdit:boolean=false;
+  isEdit: boolean = false;
 
   profileForm: FormGroup;
 
-  userList:any[]=[];
+  userList: any[] = [];
 
-  constructor(private fb:FormBuilder
-             ,private spinner:SpinnerService
-             ,private apiService:ApiServicService
-             ,private localStorage:LocalStorageService){
+  constructor(private fb: FormBuilder
+    , private spinner: SpinnerService
+    , private apiService: ApiServicService
+    , private localStorage: LocalStorageService) {
     this.profileForm = new FormGroup({
-        invoiceNumber: new FormControl(null),
-        shopName: new FormControl(null),
-        amount: new FormControl(null),
-        salesmanName: new FormControl(null),
-        salesMobileNumber: new FormControl(null),
-        deliveryPerson: new FormControl(null),
-        orderId: new FormControl(null)
-      });
+      invoiceNumber: new FormControl(null),
+      shopName: new FormControl(null),
+      amount: new FormControl(null),
+      salesmanName: new FormControl(null),
+      salesMobileNumber: new FormControl(null),
+      deliveryPerson: new FormControl(null),
+      orderId: new FormControl(null)
+    });
   }
 
   ngOnInit(): void {
     this.createProfileForm();
-    if(this.pageName === 'Edit Order'){
+    if (this.pageName === 'Edit Order') {
       this.order.invoiceNumber = this.order.invoiceNumber.substring(2);
       this.isEdit = true;
       this.profileForm.patchValue(this.order);
@@ -48,27 +48,31 @@ export class AddOrderComponent implements OnInit{
 
     this.spinner.resetSpinner();
     this.spinner.requestStarted();
-    this.apiService.listUser().subscribe({next:res=>{
-      this.userList = res;
-      this.spinner.requestEnded();
-    },error:err=>{
-      this.spinner.requestEnded();
-      alert("Internal Server Error "+err);
-    }})
-    
+    this.apiService.listUser().subscribe({
+      next: res => {
+        this.userList = res;
+        this.spinner.requestEnded();
+      }, error: err => {
+        this.spinner.requestEnded();
+        alert("Internal Server Error " + err);
+      }
+    })
+
   }
 
   get f() { return this.profileForm.controls; }
 
   createProfileForm() {
     this.profileForm = this.fb.group({
-      invoiceNumber: ['', Validators.compose([Validators.required])],
-      shopName: ['', Validators.compose([Validators.required])],
-      amount: ['',Validators.compose([Validators.required])],
-      salesmanName: ['', Validators.compose([Validators.required])],
-      salesMobileNumber: ['', Validators.compose([Validators.required])],
-      deliveryPerson: ['', Validators.compose([Validators.required])],
-      orderId:[0]
+      invoiceNumber: ['', [Validators.required]],
+      shopName: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
+      salesmanName: ['', [Validators.required]],
+      salesMobileNumber: ['', [Validators.required, Validators.minLength(10)
+        , Validators.maxLength(10), Validators.pattern('^[0-9]+$')
+      ]],
+      deliveryPerson: ['', [Validators.required]],
+      orderId: [0]
     });
   }
 
@@ -77,20 +81,22 @@ export class AddOrderComponent implements OnInit{
     order.userId = this.localStorage.getData("userId");
     this.spinner.resetSpinner();
     this.spinner.requestStarted();
-    order.invoiceNumber = 'ME'+order.invoiceNumber;
+    order.invoiceNumber = 'ME' + order.invoiceNumber;
 
-    if(this.isEdit){
+    if (this.isEdit) {
       order.orderId = this.order.orderId;
     }
 
-    this.apiService.addOrder(order).subscribe({next:res=>{
-      alert("Order added Sucessfully");
-      this.createProfileForm();
-      this.spinner.requestEnded();
-    },error:err=>{
-      alert("Internal Server Error "+err);
-      this.spinner.requestEnded();
-    }})
+    this.apiService.addOrder(order).subscribe({
+      next: res => {
+        alert("Order added Sucessfully");
+        this.createProfileForm();
+        this.spinner.requestEnded();
+      }, error: err => {
+        alert("Internal Server Error " + err);
+        this.spinner.requestEnded();
+      }
+    })
   }
 
 }

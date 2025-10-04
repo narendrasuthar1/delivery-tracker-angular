@@ -32,10 +32,10 @@ export class NavbarComponent implements OnInit {
       pageName: 'Completed Invoice',
       menuName: 'viewCompletedOrder',
     });
-    this.navBarList.push({
-      pageName: 'All Invoice',
-      menuName: 'viewAllOrders',
-    });
+    // this.navBarList.push({
+    //   pageName: 'All Invoice',
+    //   menuName: 'viewAllOrders',
+    // });
     if (userRole === "ADMIN") {
       this.navBarList.push({
         pageName: 'Add Invoice',

@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class ApiServicService {
 
-  baseURL:string = "https://deliverytracker-az2r.onrender.com";
+  // baseURL:string = "https://deliverytracker-az2r.onrender.com";
 
-    // baseURL:string = "http://localhost:8080";
+    baseURL:string = "http://localhost:8080";
 
 
   constructor(private http: HttpClient) { 
@@ -20,16 +20,12 @@ export class ApiServicService {
     return this.http.get(this.baseURL + `/user/getUserByMobileNumber/${mobileNumber}`);
   }
 
-  getOrderByStatusAndUserId(orderStatus:string,userId:number): Observable<any> {
-    return this.http.get(this.baseURL + `/order/getAllOrderByStatus/${orderStatus}/${userId}`);
+  getOrderByStatusAndUserId(apiUrl:string,orderStatus:string,userId:number): Observable<any> {
+    return this.http.get(this.baseURL + `/order/${apiUrl}/${orderStatus}/${userId}`);
   }
 
   getAllOrderByUserId(userId:number): Observable<any> {
     return this.http.get(this.baseURL + `/order/getAllOrderByUserId/${userId}`);
-  }
-
-  getOrderByStatus(orderStatus:string): Observable<any> {
-    return this.http.get(this.baseURL + `/order/getAllOrderByStatus/${orderStatus}`);
   }
 
   listUser(): Observable<any> {

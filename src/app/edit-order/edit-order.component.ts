@@ -25,7 +25,7 @@ export class EditOrderComponent implements OnInit{
     this.loader.resetSpinner();
     this.loader.requestStarted();
     this.orderList = [];
-    this.apiService.getOrderByStatus('PENDING').subscribe({next:res=>{
+    this.apiService.getOrderByStatusAndUserId('getAllOrderByStatus','PENDING',0).subscribe({next:res=>{
       this.orderList = res;
       this.loader.requestEnded();
     },error:err=>{

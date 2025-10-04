@@ -17,26 +17,39 @@ export class ViewOrderComponent implements OnInit {
 
   orderList: any[] = [];
   userId: number;
+  userRole:string;
 
 
   constructor(private apiService: ApiServicService
     , private localStorage: LocalStorageService
     , private spinnerService: SpinnerService) {
     this.userId = Number(this.localStorage.getData("userId"));
-
+    this.userRole = String(this.localStorage.getData("userRole"));
   }
 
   ngOnInit(): void {
     // Pending Invoice
-    const userRole = this.localStorage.getData("userRole");
     this.spinnerService.resetSpinner();
     this.spinnerService.requestStarted();
     this.orderList = [];
     const orderStatus = this.getOrderByStatus();
-    const userId = userRole === 'ADMIN' ? 0 : this.userId;
+    const apiUrl = this.getApiUrlByUserType(this.userRole);
+    const userId = this.userRole === 'ADMIN' ? 0 : this.userId;
 
-    if ('ALL' === orderStatus) {
-      this.apiService.getAllOrderByUserId(userId).subscribe({
+    // if ('ALL' === orderStatus) {
+    //   this.apiService.getAllOrderByUserId(userId).subscribe({
+    //     next: res => {
+    //       this.spinnerService.requestEnded();
+    //       this.orderList = res;
+    //     }, error: err => {
+    //       this.spinnerService.requestEnded();
+    //       alert("Internal Server error " + err);
+    //     }
+    //   })
+    // } else {
+
+
+      this.apiService.getOrderByStatusAndUserId(apiUrl,orderStatus, userId).subscribe({
         next: res => {
           this.spinnerService.requestEnded();
           this.orderList = res;
@@ -45,17 +58,7 @@ export class ViewOrderComponent implements OnInit {
           alert("Internal Server error " + err);
         }
       })
-    } else {
-      this.apiService.getOrderByStatusAndUserId(orderStatus, userId).subscribe({
-        next: res => {
-          this.spinnerService.requestEnded();
-          this.orderList = res;
-        }, error: err => {
-          this.spinnerService.requestEnded();
-          alert("Internal Server error " + err);
-        }
-      })
-    }
+    // }
 
   }
 
@@ -63,10 +66,15 @@ export class ViewOrderComponent implements OnInit {
 
 
   deliverOrder(order: any) {
+    if(order.isCash && Number(order.receivedAmount) <= 0){
+      alert("Please fill the amount or choose signed option");
+      return;
+    }
+
     const deliverOrder = {
       orderId: order.orderId,
       cash: order.isCash,
-      recievedAmount: order.recievedAmount,
+      receivedAmount: order.receivedAmount,
       userId: this.userId
     }
     this.spinnerService.resetSpinner();
@@ -97,6 +105,14 @@ export class ViewOrderComponent implements OnInit {
       case "All Invoice": return "ALL"
       default: return "PENDING";
     }
+  }
+
+  private getApiUrlByUserType(role:string):string{
+    switch (role) {
+      case "ADMIN": return "getAllOrderByStatus"
+      case "USER": return "getUserOrderByStatus"
+      default: return "getUserOrderByStatus"
+    } 
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="p-1">
     <h5>{{orderType}}</h5>
-    <div class="card mb-2" *ngFor="let order of orderList">
-        <div class="card-body">
+    <div class="card mb-2 mx-1" *ngFor="let order of orderList">
+        <div class="card-body" style="background-color: #d8e5f9;">
             <div class="d-flex">
                 <div class="col-8 sub-heading-font ">
                     <span class="material-symbols-outlined sub-heading-font">
@@ -39,7 +39,8 @@
                     <div class="sub-heading-font ">
                         <span class="material-symbols-outlined sub-heading-font pe-1">
                             date_range
-                        </span><span class="data-font text-bottom">{{order.orderTimeStamp}}</span>
+                        </span><span class="data-font text-bottom">{{order.orderTimeStamp | date:'dd/MM/yyyy - hh:mm
+                            a'}}</span>
                     </div>
                     <div class="sub-heading-font ">
                         <span class="material-symbols-outlined sub-heading-font">
@@ -55,16 +56,25 @@
                         chevron_right
                     </span>
                 </div>
+
+            </div>
+            <div class="d-flex" *ngIf="userRole === 'ADMIN' && 'Pending Invoice' === orderType ">
+                <div class="col-12 sub-heading-font">
+                    <span class="material-symbols-outlined sub-heading-font pe-1">
+                        delivery_truck_speed
+                    </span>
+                    <span class="data-font text-bottom">{{order.user.name}}</span>
+                </div>
+
             </div>
 
             <div *ngIf="'Pending Invoice' !== orderType">
                 <hr>
                 <div class="d-flex">
                     <div class="col-6 sub-heading-font">
-                        Paid By Cash:
-                        <span class="data-font text-bottom">{{order.cash}}</span>
+                        <span class="data-font text-bottom">{{order.cash === true?'Paid':'Signed'}}</span>
                     </div>
-                    <div class="col-6 sub-heading-font d-flex justify-content-end">
+                    <div class="col-6 sub-heading-font d-flex justify-content-end" *ngIf="order.receivedAmount">
                         <span class="material-symbols-outlined heading-font pe-1">
                             currency_rupee
                         </span>
@@ -76,7 +86,9 @@
 
                 <div class="d-flex">
                     <div class="col-6 sub-heading-font">
-                        Deliver By :
+                        <span class="material-symbols-outlined sub-heading-font pe-1">
+                            delivery_truck_speed
+                        </span>
                         <span class="data-font text-bottom">{{order.user.name}}</span>
                     </div>
 
@@ -91,7 +103,7 @@
             <div class="d-flex pb-2">
                 <div class="pe-2 form-check" (click)="paymentByCash(order,true)">
                     <input type="radio" id="cash" name="cash" [checked]="order.isCash" class="form-check-input me-1">
-                    <label for="cash" class="data-font">Cash</label>
+                    <label for="cash" class="data-font">Cash/Cheque</label>
                 </div>
                 <div class="pe-2" *ngIf="order.isCash">
                     <input type="tel" class="data-font form-control py-1" name="amount" placeholder="Enter Amount"
@@ -100,7 +112,7 @@
                 <div (click)="paymentByCash(order,false)" class="form-check">
                     <input type="radio" id="cheque" name="cheque" [checked]="!order.isCash"
                         class="form-check-input me-1">
-                    <label for="cheque" class="data-font">Cheque</label>
+                    <label for="cheque" class="data-font">Sign</label>
                 </div>
 
 

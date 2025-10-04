@@ -5,48 +5,50 @@
             <form [formGroup]="profileForm">
                 <div class="form-group py-2">
                     <label for="billNumber" class="sub-heading-font">Bill No.: ME</label>
-                    <input type="tel" id="billNumber" class="form-control data-font" [readOnly]="isEdit" formControlName="invoiceNumber">
-                    <div *ngIf="f['invoiceNumber'].touched && f['invoiceNumber'].errors" class="invalid-feedback">
+                    <input type="text" id="billNumber" class="form-control data-font" [readOnly]="isEdit" formControlName="invoiceNumber">
+                    <div *ngIf="f['invoiceNumber'].touched && f['invoiceNumber'].errors" class="invalid-feedback-custom">
                         <div *ngIf="f['invoiceNumber'].errors['required']">Bill No is required!</div>
                     </div>
                 </div>
                 <div class="form-group py-2">
                     <label for="partyName" class="sub-heading-font">Party name</label>
                     <input type="text" id="partyName" class="form-control data-font" formControlName="shopName">
-                    <div *ngIf="f['shopName'].touched && f['shopName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['shopName'].touched && f['shopName'].errors" class="invalid-feedback-custom">
                         <div *ngIf="f['shopName'].errors['required']">Party Name is required!</div>
                     </div>
                 </div>
                 <div class="form-group py-2">
                     <label for="partyName" class="sub-heading-font">Order Amount</label>
                     <input type="text" id="partyName" class="form-control data-font" formControlName="amount">
-                    <div *ngIf="f['amount'].touched && f['amount'].errors" class="invalid-feedback">
+                    <div *ngIf="f['amount'].touched && f['amount'].errors" class="invalid-feedback-custom">
                         <div *ngIf="f['amount'].errors['required']">Order Amount is required!</div>
                     </div>
                 </div>
                 <div class="form-group py-2">
                     <label for="salesName" class="sub-heading-font">Sales Person name</label>
                     <input type="text" id="salesName" class="form-control data-font" formControlName="salesmanName">
-                    <div *ngIf="f['salesmanName'].touched && f['salesmanName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['salesmanName'].touched && f['salesmanName'].errors" class="invalid-feedback-custom">
                         <div *ngIf="f['salesmanName'].errors['required']">Sales Person Name is required!</div>
                     </div>
                 </div>
                 <div class="form-group py-2">
                     <label for="salesContact" class="sub-heading-font">Sales Contact</label>
-                    <input type="text" id="salesContact" class="form-control data-font" formControlName="salesMobileNumber">
-                    <div *ngIf="f['salesMobileNumber'].touched && f['salesMobileNumber'].errors" class="invalid-feedback">
+                    <input type="tel" id="salesContact" class="form-control data-font" formControlName="salesMobileNumber">
+                    <div *ngIf="f['salesMobileNumber'].touched && f['salesMobileNumber'].errors" class="invalid-feedback-custom">
                         <div *ngIf="f['salesMobileNumber'].errors['required']">Sales Contact is required!</div>
+                        <div *ngIf="f['salesMobileNumber'].errors['minlength']">Sales Contact should not be less than 10 digit!</div>
+                        <div *ngIf="f['salesMobileNumber'].errors['maxlength']">Sales Contact should not be greater than 10 digit!</div>
+                        <div *ngIf="f['salesMobileNumber'].errors['pattern']">Sales Contact invalid!</div>
                     </div>
                 </div>
                 <div class="form-group py-2">
                     <label for="deliveryPerson" class="sub-heading-font">Delivery Person</label>
 
                     <select id="deliveryPerson" class="form-control data-font" formControlName="deliveryPerson">
-                        <!-- <option [ngValue]="''">asd</option> -->
                         <option *ngFor="let user of userList" [value]="user.userId">{{user.name}}</option>
                     </select>
 
-                    <div *ngIf="f['deliveryPerson'].touched && f['deliveryPerson'].errors" class="invalid-feedback">
+                    <div *ngIf="f['deliveryPerson'].touched && f['deliveryPerson'].errors" class="invalid-feedback-custom">
                         <div *ngIf="f['deliveryPerson'].errors['required']">Delivery Person is required!</div>
                     </div>
                 </div>
