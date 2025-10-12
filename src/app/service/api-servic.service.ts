@@ -40,4 +40,8 @@ export class ApiServicService {
     return this.http.post(this.baseURL + `/order/deliverOrder`,order);
   }
 
+  bulkUpload(apiUrl:string,order:any):Observable<any>{
+    return this.http.post(this.baseURL + apiUrl,order, {responseType: 'text'});
+  }
+
 }

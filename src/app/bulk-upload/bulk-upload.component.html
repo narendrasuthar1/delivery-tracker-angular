@@ -1,0 +1,27 @@
+
+<div class="p-2">
+    <h5>{{orderType}}</h5>
+
+    <div class="d-flex">
+      <div class="form-check form-switch d-inline-block me-3">
+       <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" [(ngModel)]="orderUpload" [checked]="orderUpload" (click)="changeswitch(true)">
+       <label class="form-check-label" for="switchCheckDefault">Bulk Order File Upload</label>
+      </div>
+     <div class="form-check form-switch d-inline-block">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" [(ngModel)]="salesUpload" [checked]="salesUpload" (click)="changeswitch(false)">
+      <label class="form-check-label" for="switchCheckChecked">Bulk Sales Person Upload</label>
+     </div>
+    </div>
+  <form [formGroup]="bulkupload">
+    
+    <div class="d-flex">
+      <input class="form-control me-1" type="file" id="formFile" (change)="onFileSelected($event)" formControlName="uploadfile" accept=".xlsx">
+      
+      <button class="btn btn-primary ms-1" type="submit" (click)="uploadfilebutton()">Upload</button>
+    </div>
+    
+     <div *ngIf="f['uploadfile'].touched && f['uploadfile'].errors" class="invalid-feedback-custom">
+        <div *ngIf="f['uploadfile'].errors['required']">File is required!</div>
+      </div>
+  </form>
+</div>

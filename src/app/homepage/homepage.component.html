@@ -19,4 +19,7 @@
   <div *ngSwitchCase="'addOrder'">
     <app-add-order [pageName]="pageHeading" [order]="orderToBeEditted"></app-add-order>
   </div>
+  <div *ngSwitchCase="'bulkUpload'">
+    <app-bulk-upload [orderType]="pageHeading"></app-bulk-upload>
+  </div>
 </div>

@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit {
       pageName: 'Completed Invoice',
       menuName: 'viewCompletedOrder',
     });
+    
     // this.navBarList.push({
     //   pageName: 'All Invoice',
     //   menuName: 'viewAllOrders',
@@ -46,6 +47,10 @@ export class NavbarComponent implements OnInit {
         pageName: 'Edit Invoice',
         menuName:'editinvoice',
       });
+      this.navBarList.push({
+      pageName: 'Bulk Upload',
+      menuName: 'bulkUpload',
+    });
     }
 
 
