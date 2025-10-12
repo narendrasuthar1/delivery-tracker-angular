@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomepageComponent } from './homepage/homepage.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
+import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
     NavbarComponent,
     HomepageComponent,
     SpinnerComponent,
-    EditOrderComponent
+    EditOrderComponent,
+    BulkUploadComponent
   ],
   imports: [
     BrowserModule,
