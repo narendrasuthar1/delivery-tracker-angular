@@ -43,6 +43,7 @@ export class AddOrderComponent implements OnInit {
     if (this.pageName === 'Edit Order') {
       this.order.invoiceNumber = this.order.invoiceNumber.substring(2);
       this.isEdit = true;
+      this.order.deliveryPerson = this.order.user.userId;
       this.profileForm.patchValue(this.order);
     }
 
